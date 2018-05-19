@@ -33,7 +33,35 @@ The key will be automatically downloaded to your computer. Please copy and place
 
 ## Windows Instance Setup
 ### Launch Windows Instance
+
+Click on Services, then click on EC2.
+
+Click on "Launch Instance"
+
+In the AMI selection screen, scroll down and select "Microsoft Windows Server 2016 Base" 
+
+In the Instance Type screen, select a "t2.xlarge" instance, then click on "Review and Launch".
+
+On the next screen, click on "Launch" and then select the "winhost" key pair you created earlier and launch the instance.
+
+Click on "View Instances" to go to the list of your instances. 
+
+Wait until the Instance State is running and Status Checks is green.
+
 ### Login To Windows Instance
+
+From your desktop, launch RDP
+
+In the Instance list view, copy the IPv4 Public IP for your instance and paste into the RDP host field.
+
+Once RDP is connected, it will ask for the username and password.
+
+Get the local administrator password for your instance by selecting your instance and in the "Actions" menu select "Get Windows Password"
+
+In the pop-up window click on "Choose File" and select the key pair file that was downloaded earlier and click on "Decrypt Password".
+
+Copy the password and login to the RDP session. You will now be logged in as the local administrator and ready to install Visual Studio. 
+
 ### Install and Configure Visual Studio Community Edition
 
 *Tools > NuGet Package Manager > Package Manager Console* menu command.
