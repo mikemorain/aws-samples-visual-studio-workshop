@@ -196,5 +196,5 @@ You should see in the Test Explorer that all tests have passed.
 ### Database Teardown
 
 ```powershell
-Remove-RDSDBInstance  -DBInstanceIdentifier $(instance-name) -SkipFinalSnapshot $true -Force
+Remove-RDSDBInstance -Region eu-west-2 -DBInstanceIdentifier $(instance-name) -SkipFinalSnapshot $true -Force
 ```
