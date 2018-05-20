@@ -9,13 +9,27 @@ namespace OracleTestProject
     public class OracleTests
     {
         private OracleConnection _connection;
-        [SetUp]
+        [SetUp, Order(1)]
         public void SetupOracleConnection()
         {
             _connection = new OracleConnection();
             var connectionString = ConfigurationManager.ConnectionStrings["OracleConnection"].ConnectionString;
             _connection.ConnectionString = connectionString;
             _connection.Open();
+        }
+
+        [SetUp, Order(2)]
+        public void CreateSchema()
+        {
+            var cmd = _connection.CreateCommand();
+            cmd.CommandText = @"CREATE TABLE Person
+                                (
+                                    FirstName VARCHAR(30),
+                                    LastName VARCHAR(30)
+                                );";
+
+            cmd.ExecuteNonQuery();
+            Assert.Pass();
         }
 
         [Test, Order(1)]
@@ -39,7 +53,7 @@ namespace OracleTestProject
             var names = new List<string>();
             while (reader.Read())
             {
-                names.Add(string.Format("{0} {1}", reader.GetString(0), reader.GetString(1)));
+                names.Add($"{reader.GetString(0)} {reader.GetString(1)}");
             }
 
             Assert.Contains("Mike Morain", names);
@@ -61,12 +75,10 @@ namespace OracleTestProject
             var names = new List<string>();
             while (reader.Read())
             {
-                names.Add(string.Format("{0} {1}", reader.GetString(0), reader.GetString(1)));
+                names.Add($"{reader.GetString(0)} {reader.GetString(1)}");
             }
 
             Assert.That(names, Has.No.Member("Mike Morain"));
         }
-
-
     }
 }
