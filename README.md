@@ -64,19 +64,99 @@ Copy the password and login to the RDP session. You will now be logged in as the
 
 ### Install and Configure Visual Studio Community Edition
 
-*Tools > NuGet Package Manager > Package Manager Console* menu command.
+Download Visual Studio Community 2017 from here: https://www.visualstudio.com/downloads/
 
-Run: Install-Package Oracle.ManagedDataAccess -Version 12.2.1100
+Run the installer.
 
-*Tools > NuGet Package Manager > Package Manager Console* menu command.
+Launch Visual Studio Community 2017
 
-Run: Install-Package NUnit -Version 3.10.1
+### Install AWS Toolkit for Visual Studio
 
-### Configure Windows Powershell for AWS
+Once Visual Studio has loaded, let's install the AWS Toolkit for Visual Studio.
 
-## Workflow Configuration
+*Tools > Extensions and Updates...* menu command.
+
+Click the 'Online' item in the left menu.
+
+Search for 'AWS Toolkit' in the Search bar top right.
+
+Select 'AWS Toolkit for Visual Studio 2017' and click 'Download.'
+
+Once complete, close Visual Studio; the toolkit will be installed automatically.
+
+Re-open Visual Studio.
+
+*View > AWS Explorer* menu command.
+
+### Configure AWS Toolkit for Visual Studio
+
+Once the sidebar has loaded, click the 'New Account Profile' button.
+
+In the modal windows, fill in the information: use 'default' as a profile name, and provide the access key ID and secret access key for the IAM profile created earlier.
+
+Click OK.
+
+From the 'Region' dropdown, select EU (London).
+
+## Building the Unit Test Workflow
+
+Now that we have our tools configured, let's get going. Since the purpose of this workshop is to demonstrate the flexibility of integrating the AWS platform with Microsoft workloads, let's use the PowerShell toolkit (pre-installed on this AWS Windows AMI) to spin up our Oracle RDS instance for testing our code.
+
+### Validating our credentials
+
+Open a PowerShell terminal.
+
+Type the following command:
+
+```powershell
+Get-AWSCredential -ListProfileDetail
+```
+
+The result should be a list of configured AWS credentials, which will be limited the default profile we just created. 
+
 ### Database Creation
+
+Now it's time to create our RDS instance. For this workshop, we'll create a small, Oracle RDS instance using the following PowerShell command: 
+
+```powershell
+TODO:
+```
+
+Let's walk through the arguments one by one. 
+
+TODO
+
 ### Configure Security Group
+
 ### Visual Studio Project Creation
+
+In Visual Studio, click the *File > New > Project* menu command.
+
+In the left sidebar, select *Visual C# > Test > Unit Test Project (.NET Framework)*
+
+Give the project a name and location, then click 'OK.'
+
+### Nuget Package Installation
+
+For this project, we're going to need to install two Nuget Packages: one for NUnit, our unit test framework of choice, and one for the Oracle Data Provider.
+
+*Tools > NuGet Package Manager > Package Manager Console* menu command.
+
+In the Package Manager Console, run the following command:
+
+```PowerShell
+Install-Package Oracle.ManagedDataAccess -Version 12.2.1100
+```
+Wait for it to complete, then run:
+
+```PowerShell
+Install-Package NUnit -Version 3.10.1
+```
+
+Now that we've installed the necessary packages, we can dig into the code.
+
 ### Unit Test Code
+
+
+
 ### Database Teardown
