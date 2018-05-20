@@ -126,7 +126,7 @@ Once you've issued this command, check the creation task progress by:
 
 ```powershell
 GET-RDSDBInstance | Select-Object DBInstanceStatus
-```powershell
+```
 
 
 ### Configure Security Group
