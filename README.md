@@ -119,14 +119,18 @@ The result should be a list of configured AWS credentials, which will be limited
 Now it's time to create our RDS instance. For this workshop, we'll create a small, Oracle RDS instance using the following PowerShell command: 
 
 ```powershell
-TODO:
+NEW-RDSDBInstance -DBName oradb01 -AllocatedStorage 20 -DBInstanceIdentifier orainst01 -Engine oracle-se2 -EngineVersion 12.1.0.2.v9 -LicenseModel license-included -MasterUsername oraadmin -MasterUserPassword ******** -PubliclyAccessible $false -storagetype gp2 -DBInstanceClass db.m4.large -BackupRetentionPeriod 0
 ```
 
-Let's walk through the arguments one by one. 
+Once you've issued this command, check the creation task progress by:
 
-TODO
+```powershell
+GET-RDSDBInstance | Select-Object DBInstanceStatus
+```powershell
+
 
 ### Configure Security Group
+
 
 ### Visual Studio Project Creation
 
