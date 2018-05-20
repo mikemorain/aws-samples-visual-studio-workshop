@@ -114,25 +114,31 @@ Get-AWSCredential -ListProfileDetail
 
 The result should be a list of configured AWS credentials, which will be limited the default profile we just created. 
 
+To initialize the session with your profile and the London region, run the following command:
+
+```powershell
+Initialize-AWSDefaultConfiguration -ProfileName default -Region eu-west-2
+```
+
 ### Database Creation
 
 Now it's time to create our RDS instance. For this workshop, we'll create a small, Oracle RDS instance using the following PowerShell command: 
 
 ```powershell
-NEW-RDSDBInstance -DBName oradb01 -AllocatedStorage 20 -DBInstanceIdentifier orainst01 -Engine oracle-se2 -EngineVersion 12.1.0.2.v9 -LicenseModel license-included -MasterUsername oraadmin -MasterUserPassword ******** -PubliclyAccessible $false -storagetype gp2 -DBInstanceClass db.m4.large -BackupRetentionPeriod 0
+New-RDSDBInstance -Region eu-west-2 -DBName oradb01 -AllocatedStorage 20 -DBInstanceIdentifier orainst01 -Engine oracle-se2 -EngineVersion 12.1.0.2.v9 -LicenseModel bring-your-own-license -MasterUsername oraadmin -MasterUserPassword ******** -PubliclyAccessible $true -storagetype gp2 -DBInstanceClass db.t2.micro -BackupRetentionPeriod 0
 ```
 
 Once you've issued this command, check the creation task progress by:
 
 ```powershell
-GET-RDSDBInstance | Select-Object DBInstanceStatus
+GET-RDSDBInstance -Region eu-west-2 | Select-Object DBInstanceStatus
 ```
 
-
-### Configure Security Group
-
+Since the AWS Toolkit in Visual Studio is also hooked up to the same account, you can also check the status by expanding the 'Amazon RDS' section in the AWS Explorer, then expanding 'Instances.' You should see your newly created instance. You can right-click and select 'View' to see the current status.
 
 ### Visual Studio Project Creation
+
+While we're waiting for the database to spin up, let's get the unit test project put together. 
 
 In Visual Studio, click the *File > New > Project* menu command.
 
@@ -161,7 +167,31 @@ Now that we've installed the necessary packages, we can dig into the code.
 
 ### Unit Test Code
 
+Copy the code from the UnitTest1.cs in this repository into the file of the same name in your project.
 
+For those familiar with .NET unit tests, this code should be pretty familiar. The functions with the 'Setup' attribute run once before running the rest of the tests. The 'Test' attribute denotes a test, and the 'TearDown' attribute runs once all the tests have completed. 
+
+For this basic example, the setup creates a database connection, and writes a basic table into the schema. The tests then connect and validate the addition and deletion of a record in that table. Then the teardown removes the schema. 
+
+The one thing you'll need to change is replacing the values (Username, Password, DNS Name, and Database Name) in the connection string on line 17.
+
+NOTE: You can get the DNS name from the Endpoint propery, by clicking on the instance in the AWS Toolkit window, right-clicking, and selecting 'Properties.' Alternatively, run this command in the Powershell terminal:
+
+```powershell
+Get-RDSDBInstance -Region eu-west-2 -DBInstanceIdentifier orainst01 | Select-Object -ExpandProperty Endpoint
+```
+
+Once the database is up and running, go ahead and run the tests. 
+
+To run these tests, first build the solution by selecting:
+
+*Build > Build Solution*
+
+Once the build completes, you can run the tests by selecting: 
+
+*Test > Run > All Tests*
+
+You should see in the Test Explorer that all tests have passed. 
 
 ### Database Teardown
 

@@ -13,7 +13,8 @@ namespace OracleTestProject
         public void SetupOracleConnection()
         {
             _connection = new OracleConnection();
-            var connectionString = ConfigurationManager.ConnectionStrings["OracleConnection"].ConnectionString;
+            // var connectionString = ConfigurationManager.ConnectionStrings["OracleConnection"].ConnectionString;
+            var connectionString = "User ID=oraadmin;password=PASSWORD;Data Source=DNSNAME:1521/ORADB01;Pooling=false;";
             _connection.ConnectionString = connectionString;
             _connection.Open();
         }
@@ -79,6 +80,16 @@ namespace OracleTestProject
             }
 
             Assert.That(names, Has.No.Member("Mike Morain"));
+        }
+
+        [TearDown]
+        public void RemoveTable()
+        {
+            var cmd = _connection.CreateCommand();
+            cmd.CommandText = @"DROP TABLE Person;";
+
+            cmd.ExecuteNonQuery();
+            Assert.Pass();
         }
     }
 }
