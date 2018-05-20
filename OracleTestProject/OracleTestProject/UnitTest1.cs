@@ -9,7 +9,7 @@ namespace OracleTestProject
     public class OracleTests
     {
         private OracleConnection _connection;
-        [SetUp, Order(1)]
+        [OneTimeSetUp, Order(1)]
         public void SetupOracleConnection()
         {
             _connection = new OracleConnection();
@@ -19,7 +19,7 @@ namespace OracleTestProject
             _connection.Open();
         }
 
-        [SetUp, Order(2)]
+        [OneTimeSetUp, Order(2)]
         public void CreateSchema()
         {
             var cmd = _connection.CreateCommand();
@@ -27,10 +27,9 @@ namespace OracleTestProject
                                 (
                                     FirstName VARCHAR(30),
                                     LastName VARCHAR(30)
-                                );";
+                                )";
 
             cmd.ExecuteNonQuery();
-            Assert.Pass();
         }
 
         [Test, Order(1)]
@@ -82,14 +81,13 @@ namespace OracleTestProject
             Assert.That(names, Has.No.Member("Mike Morain"));
         }
 
-        [TearDown]
+        [OneTimeTearDown]
         public void RemoveTable()
         {
             var cmd = _connection.CreateCommand();
-            cmd.CommandText = @"DROP TABLE Person;";
+            cmd.CommandText = @"DROP TABLE Person";
 
             cmd.ExecuteNonQuery();
-            Assert.Pass();
         }
     }
 }
