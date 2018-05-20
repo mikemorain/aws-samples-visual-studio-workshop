@@ -164,3 +164,7 @@ Now that we've installed the necessary packages, we can dig into the code.
 
 
 ### Database Teardown
+
+```powershell
+Remove-RDSDBInstance  -DBInstanceIdentifier $(instance-name) -SkipFinalSnapshot $true -Force
+```
