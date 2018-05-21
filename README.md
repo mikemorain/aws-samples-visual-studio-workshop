@@ -169,7 +169,7 @@ Now that we've installed the necessary packages, we can dig into the code.
 
 Copy the code from the UnitTest1.cs in this repository into the file of the same name in your project.
 
-For those familiar with .NET unit tests, this code should be pretty familiar. The functions with the 'Setup' attribute run once before running the rest of the tests. The 'Test' attribute denotes a test, and the 'TearDown' attribute runs once all the tests have completed. 
+For those familiar with .NET unit tests, this code should be pretty familiar. The functions with the 'OneTimeSetUp' attribute run once before running the rest of the tests. The 'Test' attribute denotes a test, and the 'OneTimeTearDown' attribute runs once all the tests have completed. 
 
 For this basic example, the setup creates a database connection, and writes a basic table into the schema. The tests then connect and validate the addition and deletion of a record in that table. Then the teardown removes the schema. 
 
