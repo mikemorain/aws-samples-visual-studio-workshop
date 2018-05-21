@@ -198,3 +198,5 @@ You should see in the Test Explorer that all tests have passed.
 ```powershell
 Remove-RDSDBInstance -Region eu-west-2 -DBInstanceIdentifier orainst01 -SkipFinalSnapshot $true -Force
 ```
+
+NOTE: Don't forget to log in to the console and terminate the EC2 instance running Visual Studio.
